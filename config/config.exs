@@ -20,7 +20,7 @@ config :logger, :console,
   metadata: [:request_id]
 
 config :octograph,
-  github_token: "1cc228bfeaf59324f11256f6257483d10f95630b"
+  github_token: "a72eab30ba6a20ead9b0cdfcea65343b716305f9"
  
 
 # Import environment specific config. This must remain at the bottom

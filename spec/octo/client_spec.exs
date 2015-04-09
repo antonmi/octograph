@@ -29,7 +29,23 @@ defmodule Octo.ClientSpec do
 
 		let! :antonmi, do: Client.users("antonmi")
 
-		it do: antonmi["email"] |> should eq "anton.mishchuk@gmail.com"
+		it do
+			IO.inspect antonmi
+		  antonmi["email"] |> should eq "anton.mishchuk@gmail.com"
+		end 
+	end
+
+	describe "repos" do
+
+		it do
+			followers = Client.followers_of("sasa1977")
+			followers
+			|> Enum.each fn(foll) ->
+				IO.inspect foll["login"]
+				IO.inspect Client.followers_of(foll["login"]) |> Enum.to_list |> Enum.map(&(&1["login"]))
+			end
+		end
+
 	end
 
 end

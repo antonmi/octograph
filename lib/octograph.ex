@@ -15,6 +15,8 @@ defmodule Octograph do
       # worker(Octograph.Worker, [arg1, arg2, arg3]),
     ]
 
+    Octograph.BaseRepo.start
+
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Octograph.Supervisor]

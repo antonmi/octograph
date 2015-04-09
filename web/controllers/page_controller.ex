@@ -4,6 +4,8 @@ defmodule Octograph.PageController do
   plug :action
 
   def index(conn, _params) do
-    render conn, "index.html"
+  	nodes = Octograph.UserNodeRepo.all
+  	edges = Octograph.FollowEdgeRepo.all
+    render conn, "index.html", nodes: nodes, edges: edges
   end
 end
