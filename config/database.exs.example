@@ -1,0 +1,7 @@
+use Mix.Config
+
+config :charts, Charts.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  database: "charts_dev",
+  username: "postgres",
+  password: "123456"

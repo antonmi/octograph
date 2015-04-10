@@ -9,14 +9,4 @@ config :octograph, Octograph.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
-# Configure your database
-# config :octograph, Octograph.Repo,
-#   adapter: Ecto.Adapters.Postgres,
-#   username: "postgres",
-#   password: "postgres",
-#   database: "octograph_test",
-#   size: 1,
-#   max_overflow: false
-
-config :octograph,
-  mongo_db: "octograph_test" 
+import_config "database_test.exs"

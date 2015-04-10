@@ -9,6 +9,6 @@ erl_crash.dump
 # Static artifacts
 /node_modules
 
-# Since we are building js and css from web/static,
-# we ignore priv/static/{css,js}. You may want to
-# comment this depending on your deployment strategy.
+config/github_secret.exs
+config/database.exs
+config/database_test.exs

@@ -1,9 +1,12 @@
 defmodule Octograph.FollowEdge do
-
-	defstruct id: nil, from: nil, to: nil
+	use Ecto.Model
+	
+	schema "follow_edges" do
+    field :from, :integer
+    field :to, :integer
+  end
 
 	def new(from, to) do
-		id = "#{from}_#{to}"
-		%__MODULE__{id: id, from: from, to: to}
+		%__MODULE__{from: from, to: to}
 	end
 end

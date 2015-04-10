@@ -19,11 +19,11 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :octograph,
-  github_token: "a72eab30ba6a20ead9b0cdfcea65343b716305f9"
  
+import_config "github_secret.exs"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
+
 

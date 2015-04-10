@@ -7,8 +7,8 @@ use Mix.Config
 # You should also configure the url host to something
 # meaningful, we use this information when generating URLs.
 config :octograph, Octograph.Endpoint,
-  http: [port: {:system, "PORT"}],
-  url: [host: "example.com"]
+  http: [port: 4000],
+  url: [host: "localhost"]
 
 # ## SSL Support
 #
@@ -43,3 +43,5 @@ config :logger, level: :info
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
 import_config "prod.secret.exs"
+# Configure your database
+import_config "database.exs"

@@ -6,7 +6,7 @@
   // create an array with nodes
   var nodes = [
     <%= for node <- @nodes do %>
-      {id: '<%= node.id %>', label: '<%= node.id %>'},
+      {id: '<%= node.id %>', label: '<%= node.login %>'},
     <% end %>
   ];
 

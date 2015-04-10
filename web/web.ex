@@ -18,7 +18,7 @@ defmodule Octograph.Web do
 
   def model do
     quote do
-
+      use Ecto.Model
     end
   end
 
@@ -28,7 +28,8 @@ defmodule Octograph.Web do
 
       # Alias the data repository and import query/model functions
       alias Octograph.Repo
-
+      import Ecto.Model
+      import Ecto.Query, only: [from: 2]
       # Import URL helpers from the router
       import Octograph.Router.Helpers
     end
@@ -55,6 +56,8 @@ defmodule Octograph.Web do
 
       # Alias the data repository and import query/model functions
       alias Octograph.Repo
+      import Ecto.Model
+      import Ecto.Query, only: [from: 2]
 
     end
   end

@@ -27,11 +27,4 @@ config :octograph, Octograph.Endpoint,
 config :logger, :console, format: "[$level] $message\n"
 
 # Configure your database
-# config :octograph, Octograph.Repo,
-#   adapter: Ecto.Adapters.Postgres,
-#   username: "postgres",
-#   password: "postgres",
-#   database: "octograph_dev"
-
-config :octograph,
-  mongo_db: "octograph_dev" 
+import_config "database.exs"

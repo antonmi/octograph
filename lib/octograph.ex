@@ -10,12 +10,10 @@ defmodule Octograph do
       # Start the endpoint when the application starts
       supervisor(Octograph.Endpoint, []),
       # Start the Ecto repository
-      # worker(Octograph.Repo, []),
+      worker(Octograph.Repo, []),
       # Here you could define other workers and supervisors as children
       # worker(Octograph.Worker, [arg1, arg2, arg3]),
     ]
-
-    Octograph.BaseRepo.start
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options

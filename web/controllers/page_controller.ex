@@ -4,8 +4,8 @@ defmodule Octograph.PageController do
   plug :action
 
   def index(conn, _params) do
-  	nodes = Octograph.UserNodeRepo.all
-  	edges = Octograph.FollowEdgeRepo.all
+    {nodes, edges} = Octograph.Traverser.level(6)
+    {nodes, edges} = {Enum.uniq(nodes), Enum.uniq(edges)}
     render conn, "index.html", nodes: nodes, edges: edges
   end
 end

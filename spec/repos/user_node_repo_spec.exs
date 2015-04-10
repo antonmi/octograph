@@ -1,33 +1,23 @@
 defmodule UserNodeRepoSpec do
 
 	use ESpec
-	alias Octograph.UserNodeRepo
-	alias Octograph.FollowEdgeRepo
-	alias Octograph.FollowEdge
-	alias Octograph.UserNode
-	alias Octograph.Octo.Client 
 
 	before do
-		["node_1", "node_2", "node_3"]
-		|> Enum.each fn(id) ->
-			un = %UserNode{id: id}
-			UserNodeRepo.create(un)
-		end
+		Octograph.UserNodeRepo.delete_all
+		Octograph.FollowEdgeRepo.delete_all
 	end
 
-	it do
-		IO.inspect UserNodeRepo.all
-
+	before do
+		u1 = %Octograph.UserNode{login: "u1"}
+		u2 = %Octograph.UserNode{login: "u2"}
+		u3 = %Octograph.UserNode{login: "u3"}
+		[u1, u2, u3] = Octograph.UserNodeRepo.create([u1, u2, u3])
+		{:ok, u1: u1, u2: u2, u3: u3}
 	end
 
-	context "use client"  do
+	describe "find_by_ids" do
+		subject Octograph.UserNodeRepo.find_by_ids([__.u1.id, __.u2.id, __.u3.id])
 
-	it do
-		Octograph.Octo.Client.connections("antonmi")
-		Octograph.UserNodeRepo.all |> Enum.each(fn(u) -> Octograph.Octo.Client.connections(u.id) end)
-
-		IO.inspect Octograph.FollowEdgeRepo.all
-	end
-
-	end
+		it do: should have_count 3
+	end 
 end

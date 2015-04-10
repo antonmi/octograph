@@ -1,9 +1,13 @@
 defmodule Octograph.UserNode do
+	use Ecto.Model
 
-	defstruct id: nil
+	schema "user_nodes" do
+    field :login, :string
+  end
 
-	def build(data) do
-		%__MODULE__{id: data["login"]}
+	def new(data) do
+		%__MODULE__{login: data["login"]}
 	end
+
 	
 end

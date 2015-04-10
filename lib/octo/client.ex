@@ -24,14 +24,13 @@ defmodule Octograph.Octo.Client do
 
 
 	def connections(name) do
-		user = Octograph.Octo.Client.users(name)
-		Octograph.UserNodeRepo.create(Octograph.UserNode.build(user))
+		user = Octograph.UserNodeRepo.find_or_create_by_login(name)
 		followers = Octograph.Octo.Client.followers_of(name)
-		followers = Enum.map(followers, fn(foll) -> Octograph.UserNode.build(foll) end)
-		Octograph.UserNodeRepo.create(followers)
-		Enum.each(followers, fn(u) -> 
-			edge = Octograph.FollowEdge.new(name, u.id)
-			Octograph.FollowEdgeRepo.create(edge)
+		
+		Enum.each(followers, fn(foll) -> 
+			u = Octograph.UserNodeRepo.find_or_create_by_login(foll["login"])
+			edge = Octograph.FollowEdge.new(user.id, u.id)
+			Octograph.FollowEdgeRepo.create(edge)	
 		end)
 	end
 end
