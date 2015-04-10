@@ -2,7 +2,7 @@ defmodule Octograph.Traverser do
 	
 
 	def level(n) do
-		acc0 = {[Octograph.UserNodeRepo.find_by_login("ievgenp")], []}
+		# acc0 = {[Octograph.UserNodeRepo.find_by_login("ievgenp")], []}
 		acc0 = {[Octograph.UserNodeRepo.sample], []}
 		Enum.reduce((1..n), acc0, fn(_i, acc) -> 
 			{nodes, edges} = acc
