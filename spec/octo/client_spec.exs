@@ -35,15 +35,16 @@ defmodule Octo.ClientSpec do
 		end 
 	end
 
-	describe "repos" do
+	describe "followers" do
 
 		it do
-			followers = Client.followers_of("sasa1977")
-			followers
-			|> Enum.each fn(foll) ->
-				IO.inspect foll["login"]
-				IO.inspect Client.followers_of(foll["login"]) |> Enum.to_list |> Enum.map(&(&1["login"]))
-			end
+			IO.inspect followers = Client.followers_of("alco")
+			IO.inspect Enum.count(followers)
+		end
+
+		it do
+			IO.inspect following = Client.following("alco")
+			IO.inspect Enum.count(following)
 		end
 
 	end

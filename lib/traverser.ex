@@ -2,8 +2,8 @@ defmodule Octograph.Traverser do
 	
 
 	def level(n) do
-		acc0 = {[Octograph.UserNodeRepo.find_by_login("antonmi")], []}
-		# acc0 = {[Octograph.UserNodeRepo.sample], []}
+		# acc0 = {[Octograph.UserNodeRepo.find_by_login("antonmi")], []}
+		acc0 = {[Octograph.UserNodeRepo.sample], []}
 		Enum.reduce((1..n), acc0, fn(_i, acc) -> 
 			{nodes, edges} = acc
 			new_edges = Octograph.FollowEdgeRepo.from_nodes(nodes)

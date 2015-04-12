@@ -18,6 +18,10 @@ defmodule Octograph.Octo.Client do
 		Tentacat.Users.Followers.followers(name, client)
 	end
 
+	def following(name) do
+		Tentacat.Users.Followers.following(name, client)
+	end
+
 	def client, do:	%Tentacat.Client{auth: %{access_token: access_token}}
 
 	defp access_token, do: Application.get_env(:octograph, :github_token)
@@ -25,11 +29,18 @@ defmodule Octograph.Octo.Client do
 
 	def connections(name) do
 		user = Octograph.UserNodeRepo.find_or_create_by_login(name)
-		followers = Octograph.Octo.Client.followers_of(name)
 		
+		followers = Octograph.Octo.Client.followers_of(name)
 		Enum.each(followers, fn(foll) -> 
 			u = Octograph.UserNodeRepo.find_or_create_by_login(foll["login"])
 			edge = Octograph.FollowEdge.new(user.id, u.id)
+			Octograph.FollowEdgeRepo.create(edge)	
+		end)
+
+		following = Octograph.Octo.Client.following(name)
+		Enum.each(following, fn(foll) -> 
+			u = Octograph.UserNodeRepo.find_or_create_by_login(foll["login"])
+			edge = Octograph.FollowEdge.new(u.id, user.id)
 			Octograph.FollowEdgeRepo.create(edge)	
 		end)
 	end
