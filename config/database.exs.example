@@ -1,7 +1,7 @@
 use Mix.Config
 
-config :charts, Charts.Repo,
+config :octograph, Octograph.Repo,
   adapter: Ecto.Adapters.Postgres,
-  database: "charts_dev",
+  database: "octograph_dev",
   username: "postgres",
   password: "123456"
