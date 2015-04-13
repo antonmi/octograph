@@ -28,18 +28,19 @@ defmodule Octograph.Octo.Client do
 
 
 	def connections(name) do
-		user = Octograph.UserNodeRepo.find_or_create_by_login(name)
+		user_data = users(name)
+		user = Octograph.UserNodeRepo.find_or_create_by(user_data["login"], user_data["id"])
 		
 		followers = Octograph.Octo.Client.followers_of(name)
 		Enum.each(followers, fn(foll) -> 
-			u = Octograph.UserNodeRepo.find_or_create_by_login(foll["login"])
+			u = Octograph.UserNodeRepo.find_or_create_by(foll["login"], foll["id"])
 			edge = Octograph.FollowEdge.new(user.id, u.id)
 			Octograph.FollowEdgeRepo.create(edge)	
 		end)
 
 		following = Octograph.Octo.Client.following(name)
 		Enum.each(following, fn(foll) -> 
-			u = Octograph.UserNodeRepo.find_or_create_by_login(foll["login"])
+			u = Octograph.UserNodeRepo.find_or_create_by(foll["login"], foll["id"])
 			edge = Octograph.FollowEdge.new(u.id, user.id)
 			Octograph.FollowEdgeRepo.create(edge)	
 		end)

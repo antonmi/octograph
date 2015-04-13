@@ -42,6 +42,17 @@ defmodule Octograph.BaseRepo do
       def all(), do: Repo.all(from m in module, select: m)
       def all(query), do: Repo.all(query)
 
+      def first do
+        query = from(m in module, order_by: [asc: m.id], limit: 1)
+        Octograph.Repo.one(query)
+      end
+
+      def last do
+        query = from(m in module, order_by: [desc: m.id], limit: 1)
+        Octograph.Repo.one(query)
+      end
+
+
       defp module() do
         Atom.to_string(__MODULE__) |> String.split("Repo")
         |> List.first |> String.to_atom

@@ -1,0 +1,5 @@
+<div class="row">
+  <div class="col-md-8">
+  <h3>Count: <%= @count %></h3>
+  <h3>Sample: <%= "id: #{@user_node.id}, login: #{@user_node.login}, github_id: #{@user_node.github_id}" %></h3>
+</div>

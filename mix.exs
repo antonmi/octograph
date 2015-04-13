@@ -34,7 +34,7 @@ defmodule Octograph.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:phoenix_live_reload, "~> 0.3"},
      {:cowboy, "~> 1.0"},
-     {:espec, "~> 0.4.0"},
+     {:espec, "~> 0.4.1"},
      {:tentacat, "~> 0.1.4"},
      {:mongo, "~> 0.5.0"}
    ]

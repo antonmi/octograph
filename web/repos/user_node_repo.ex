@@ -6,9 +6,9 @@ defmodule Octograph.UserNodeRepo do
     Octograph.Repo.all(query) |> List.first
 	end
 
-	def find_or_create_by_login(login) do
+	def find_or_create_by(login, github_id) do
 		user = find_by_login(login)
-		unless user, do: user = create(%Octograph.UserNode{login: login})
+		unless user, do: user = create(%Octograph.UserNode{login: login, github_id: github_id})
 		user
 	end
 
@@ -18,7 +18,10 @@ defmodule Octograph.UserNodeRepo do
     Octograph.Repo.one(query)
 	end
 
-	
+	def last_by_github_id do
+    query = from(m in module, order_by: [desc: :github_id], limit: 1)
+    Octograph.Repo.one(query)
+  end
 	
 
 end

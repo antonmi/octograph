@@ -63,6 +63,18 @@
     </nav>
 
     <div class='container'>
+      <%= if get_flash(@conn, :notice) do %>
+        <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <%= get_flash(@conn, :notice) %>
+        </div>
+        <% end %>
+        <%= if get_flash(@conn, :error) do %>
+        <div class="alert alert-danger alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <%= get_flash(@conn, :error) %>
+        </div>
+      <% end %>
       <%= @inner %>
     </div>
 
