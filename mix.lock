@@ -21,4 +21,4 @@
   "postgrex": {:hex, :postgrex, "0.8.1"},
   "ranch": {:hex, :ranch, "1.0.0"},
   "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.4"},
-  "tentacat": {:hex, :tentacat, "0.1.4"}}
+  "tentacat": {:git, "git://github.com/antonmi/tentacat.git", "37a5db32df1bf4151cec83f2e023ea2cbd89f286", []}}

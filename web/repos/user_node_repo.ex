@@ -19,8 +19,13 @@ defmodule Octograph.UserNodeRepo do
 	end
 
 	def last_by_github_id do
-    query = from(m in module, order_by: [desc: :github_id], limit: 1)
+    query = from(un in module, order_by: [desc: :github_id], limit: 1)
     Octograph.Repo.one(query)
+  end
+
+  def without_followers do
+		query = from(un in module, where: is_nil(un.followers_checked_at), select: un, limit: 100)
+    Octograph.Repo.all(query)
   end
 	
 

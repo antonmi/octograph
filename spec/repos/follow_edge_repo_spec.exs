@@ -8,9 +8,9 @@ defmodule FollowEdgeRepoSpec do
 	end
 
 	before do
-		u1 = %Octograph.UserNode{login: "u1"}
-		u2 = %Octograph.UserNode{login: "u2"}
-		u3 = %Octograph.UserNode{login: "u3"}
+		u1 = %Octograph.UserNode{login: "u1", github_id: 1}
+		u2 = %Octograph.UserNode{login: "u2", github_id: 2}
+		u3 = %Octograph.UserNode{login: "u3", github_id: 3}
 		[u1, u2, u3] = Octograph.UserNodeRepo.create([u1, u2, u3])
 		{:ok, u1: u1, u2: u2, u3: u3}
 	end
@@ -29,13 +29,15 @@ defmodule FollowEdgeRepoSpec do
 	it do: Octograph.FollowEdgeRepo.count |> should eq 3
 
 	describe "edges" do
-		let :from, do: Octograph.FollowEdgeRepo.from_node(__.u1)
-		let :to, do: Octograph.FollowEdgeRepo.to_node(__.u1)
+		let :from, do: Octograph.FollowEdgeRepo.from_nodes([__.u1])
+		let :to, do: Octograph.FollowEdgeRepo.to_nodes([__.u1])
 
 		it do
 			expect(from).to have_count 2
 			expect(to).to have_count 1
 		end
 	end
+
+	
 
 end

@@ -30,4 +30,23 @@ defmodule UserNodeRepoSpec do
 		let :last, do: Octograph.UserNodeRepo.last_by_github_id
 		it do: last.github_id |> should eq 3
 	end
+
+	describe "followers_updated" do
+		before do
+			Octograph.UserNode.followers_updated!(__.u1)
+		end
+
+		let :u1, do: Octograph.UserNodeRepo.find_by_login("u1")
+
+		it do: IO.inspect u1.followers_checked_at
+	end
+
+	describe "without_followers" do
+		before do
+			Octograph.UserNode.followers_updated!(__.u1)
+		end
+
+		let :users, do: Octograph.UserNodeRepo.without_followers
+		it do: Enum.map(users, &(&1.login)) |> should eq ["u2", "u3"]
+	end
 end

@@ -35,7 +35,7 @@ defmodule Octograph.Mixfile do
      {:phoenix_live_reload, "~> 0.3"},
      {:cowboy, "~> 1.0"},
      {:espec, "~> 0.4.1"},
-     {:tentacat, "~> 0.1.4"},
+     {:tentacat, github: "antonmi/tentacat"},
      {:mongo, "~> 0.5.0"}
    ]
   end

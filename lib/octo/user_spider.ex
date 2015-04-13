@@ -14,7 +14,7 @@
 	end
 
 	def stop do
-		GenServer.call(__MODULE__, :stop)
+		GenServer.call(__MODULE__, :stop, :infinity)
 	end
 
 	def info do
