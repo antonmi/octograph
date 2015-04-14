@@ -32,6 +32,7 @@
 			Octograph.UserNodeRepo.find_or_create_by(user["login"], user["id"])
 		end
 		last = List.last(users)
+		:timer.sleep(500)
 		GenServer.cast __MODULE__, {:next, %{since: last["id"]}}
 	end
 
