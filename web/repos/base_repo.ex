@@ -22,6 +22,8 @@ defmodule Octograph.BaseRepo do
         end
       end
 
+      def update(model), do: Repo.update(model)
+
       def delete_all do
         query = from un in module
         Octograph.Repo.delete_all(query)

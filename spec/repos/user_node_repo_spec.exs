@@ -31,6 +31,43 @@ defmodule UserNodeRepoSpec do
 		it do: last.github_id |> should eq 3
 	end
 
+	describe "update_or_create" do
+		before do
+			data = %{"login" => "test", "id" => 100500}
+			user_node = Octograph.UserNode.new(data)
+			{:ok, user_node: user_node}
+		end
+
+		before do
+			created = Octograph.UserNodeRepo.update_or_create(__.user_node)
+			{:ok, created: created}
+		end
+
+		let :user_node, do: Octograph.UserNodeRepo.find_by_login("test")
+
+		it "check user_node" do
+			expect(user_node.login).to eq("test")
+			expect(user_node.github_id).to eq(100500)
+		end
+
+		context "udpdate" do
+			before do
+				data = %{"login" => "test", "id" => 100501}
+				user_node = Octograph.UserNode.new(data)
+				Octograph.UserNodeRepo.update_or_create(user_node)
+			end
+			
+			let :user_node, do: Octograph.UserNodeRepo.find_by_login("test")
+			
+			it "check user_node" do
+				expect(user_node.login).to eq("test")
+				expect(user_node.github_id).to eq(100501)
+			end
+		end
+
+
+	end
+
 	describe "followers_updated" do
 		before do
 			Octograph.UserNode.followers_updated!(__.u1)
@@ -38,8 +75,11 @@ defmodule UserNodeRepoSpec do
 
 		let :u1, do: Octograph.UserNodeRepo.find_by_login("u1")
 
-		it do: IO.inspect u1.followers_checked_at
+		it "check datetime" do
+		 	expect(u1.followers_checked_at.day).to be :>, 0
+		end
 	end
+
 
 	describe "without_followers" do
 		before do

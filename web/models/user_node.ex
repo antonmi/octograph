@@ -8,7 +8,10 @@ defmodule Octograph.UserNode do
   end
 
 	def new(data) do
-		%__MODULE__{login: data["login"], github_id: data["id"]}
+		%__MODULE__{
+			login: data["login"],
+			github_id: data["id"]
+		}
 	end
 
 	def followers_updated!(user_node) do

@@ -6,9 +6,13 @@ defmodule Octograph.UserNodeRepo do
     Octograph.Repo.all(query) |> List.first
 	end
 
-	def find_or_create_by(login, github_id) do
-		user = find_by_login(login)
-		unless user, do: user = create(%Octograph.UserNode{login: login, github_id: github_id})
+	def update_or_create(user_node) do
+		user = find_by_login(user_node.login)
+		if user do
+			user = update(%{user_node | id: user.id})
+		else
+			user = create(user_node)
+		end
 		user
 	end
 

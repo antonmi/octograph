@@ -6,7 +6,7 @@ defmodule UserSpiderSpec do
 		Octograph.UserNodeRepo.delete_all
 	end
 
-	it do: expect(Octograph.Octo.UserSpider.info.since)
+	it do: expect(Octograph.Octo.UserSpider.info.status).to eq(:inactive)
 
 	describe do
 
@@ -26,12 +26,13 @@ defmodule UserSpiderSpec do
 
 		it do
 			:timer.sleep(500)
-			expect(Octograph.Octo.UserSpider.info.since).to eq(0)			
+			expect(Octograph.Octo.UserSpider.info.status).to eq(:active)			
 			# expect(Octograph.Octo.Client).to accepted(:users, :any, pid: __.pid)
 			Octograph.Octo.UserSpider.stop
 			:timer.sleep(3000)
 			# expect(Octograph.Octo.Client).to accepted(:users, :any, pid: __.pid, count: 1)
-			expect(Octograph.UserNodeRepo.count).to eq(100)
+			expect(Octograph.UserNodeRepo.count).to be :>=, 100
+			IO.inspect Octograph.UserNodeRepo.last
 		end
 
 

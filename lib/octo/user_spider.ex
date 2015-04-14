@@ -29,7 +29,8 @@
 	def get_users(since) do
 		users = Octograph.Octo.Client.users(since)
 		Enum.each users, fn(user) ->
-			Octograph.UserNodeRepo.find_or_create_by(user["login"], user["id"])
+			user_node = Octograph.UserNode.new(user)
+			Octograph.UserNodeRepo.update_or_create(user_node)
 		end
 		last = List.last(users)
 		:timer.sleep(500)

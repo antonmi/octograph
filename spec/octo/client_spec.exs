@@ -49,4 +49,10 @@ defmodule Octo.ClientSpec do
 
 	end
 
+	describe "connections" do
+	  it do
+     
+	  end
+	end
+
 end
