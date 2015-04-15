@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-md-8">
+  <h3>Spider: <%= @spider %></h3>
+  <h3>Status: <%= @info.status %></h3>
+  <h3>State: <%= "#{inspect @info.state}" %></h3>
+
+  <form action="<%= spiders_start_path(@conn, :start, @spider)%>" method="post">
+    <button type="submit" class="btn btn-info">Start</button>
+  </form>
+  <form action="<%= spiders_stop_path(@conn, :stop, @spider)%>" method="post">
+    <button type="submit" class="btn btn-danger">Stop</button>
+  </form>
+</div>
