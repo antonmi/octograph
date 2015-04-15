@@ -28,6 +28,18 @@ defmodule FollowEdgeRepoSpec do
 	it do: Octograph.UserNodeRepo.count |> should eq 3
 	it do: Octograph.FollowEdgeRepo.count |> should eq 3
 
+	describe "duplicate records" do
+		before do
+		 	edge1 = Octograph.FollowEdge.new(__.u1.id, __.u2.id)
+		 	|> Octograph.FollowEdgeRepo.create
+		 	edge2 = Octograph.FollowEdge.new(__.u1.id, __.u3.id)
+		 	|> Octograph.FollowEdgeRepo.create
+		 	edge3 = Octograph.FollowEdge.new(__.u2.id, __.u1.id)
+		 	|> Octograph.FollowEdgeRepo.create
+	 	end
+	 	it do: Octograph.FollowEdgeRepo.count |> should eq 3
+	end
+
 	describe "edges" do
 		let :from, do: Octograph.FollowEdgeRepo.from_nodes([__.u1])
 		let :to, do: Octograph.FollowEdgeRepo.to_nodes([__.u1])
@@ -37,6 +49,7 @@ defmodule FollowEdgeRepoSpec do
 			expect(to).to have_count 1
 		end
 	end
+
 
 	
 

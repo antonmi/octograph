@@ -49,10 +49,23 @@ defmodule Octo.ClientSpec do
 
 	end
 
-	describe "connections" do
-	  it do
-     
-	  end
+	describe "all_followers" do
+		before do
+			count = Octograph.Octo.Client.users("brianleroux")["followers"]
+			data = %{"login" => "brianleroux", "id" => 990}
+			user = %{Octograph.UserNode.new(data) | flrs_count: count}
+			{:ok, user: user, count: count}
+		end
+
+		let :all_followers, do: Octograph.Octo.Client.all_followers(__.user)
+
+		it "checks followers" do
+			followers_logins = all_followers 
+			|> Enum.map(fn(f) -> f["login"] end)
+			|> Enum.uniq 
+			Enum.count(followers_logins) |> should eq __.count
+		end
+
 	end
 
 end

@@ -31,7 +31,7 @@ defmodule Octograph.BaseRepo do
 
       def count do
         query = from(un in module, select: count(un.id))
-        Octograph.Repo.one(query)
+        Octograph.Repo.one(query, timeout: :infinity)
       end
 
       def find_by_ids(ids) do

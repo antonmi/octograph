@@ -3,16 +3,18 @@ defmodule Octograph.UserNodeRepo do
 
 	def find_by_login(login) do
 		query = from un in Octograph.UserNode, where: un.login == ^login, select: un
-    Octograph.Repo.all(query) |> List.first
+    Octograph.Repo.one(query)
 	end
 
-	def update_or_create(user_node) do
+	def find_by_logins(logins) do
+    query = from r in module, where: r.login in ^logins, select: r
+    Octograph.Repo.all(query)
+  end
+
+
+	def find_or_create(user_node) do
 		user = find_by_login(user_node.login)
-		if user do
-			user = update(%{user_node | id: user.id})
-		else
-			user = create(user_node)
-		end
+		unless user, do: user = create(user_node)
 		user
 	end
 
@@ -27,10 +29,27 @@ defmodule Octograph.UserNodeRepo do
     Octograph.Repo.one(query)
   end
 
-  def without_followers do
-		query = from(un in module, where: is_nil(un.followers_checked_at), select: un, limit: 100)
-    Octograph.Repo.all(query)
+  def with_max_followers do
+    query = from(un in module, where: not is_nil(un.flrs_count), order_by: [desc: :flrs_count], limit: 1)
+    Octograph.Repo.one(query, timeout: :infinity)
   end
-	
+
+  def first_without_followers do
+		query = from(un in module, where: is_nil(un.followers_checked_at), select: un, limit: 1)
+    Octograph.Repo.one(query)
+  end
+
+  def find_or_create_followers(data) do
+  	logins = Enum.map(data, fn(d) -> d["login"] end)
+   	stored = find_by_logins(logins)
+  	new = Enum.filter(data, fn(d) ->
+  		!Enum.any?(stored, fn(u) -> u.login == d["login"] end)
+  	end)
+  	Enum.each(new, fn(n) -> create(Octograph.UserNode.new(n))	end)
+  	find_by_logins(logins)
+  end
+
+
+
 
 end

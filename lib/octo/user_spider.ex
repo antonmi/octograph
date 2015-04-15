@@ -18,6 +18,7 @@
 	end
 
 	def info do
+		IO.inspect "1111111111"
 		if Process.whereis(Octograph.Octo.UserSpider) do
 			state = GenServer.call(__MODULE__, :info, :infinity)
 			%{status: :active, state: state}
@@ -30,7 +31,7 @@
 		users = Octograph.Octo.Client.users(since)
 		Enum.each users, fn(user) ->
 			user_node = Octograph.UserNode.new(user)
-			Octograph.UserNodeRepo.update_or_create(user_node)
+			Octograph.UserNodeRepo.find_or_create(user_node)
 		end
 		last = List.last(users)
 		:timer.sleep(500)

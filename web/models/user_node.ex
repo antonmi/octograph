@@ -4,6 +4,8 @@ defmodule Octograph.UserNode do
 	schema "user_nodes" do
     field :login, :string
     field :github_id, :integer
+    field :flrs_count, :integer
+  	field :flng_count, :integer
     field :followers_checked_at, Ecto.DateTime
   end
 

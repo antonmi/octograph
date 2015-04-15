@@ -24,6 +24,16 @@ defmodule Octograph.Octo.Client do
 
 	def client, do:	%Tentacat.Client{auth: %{access_token: access_token}}
 
+	def all_followers(user) do
+		pages = div(user.flrs_count, 100) + 1
+		(1..pages)
+		|> Enum.map(fn(page) ->
+			Tentacat.Users.Followers.followers(user.login, client, page)
+		end)
+	  |> List.flatten
+	end
+
+
 	defp access_token, do: Application.get_env(:octograph, :github_token)
 
 

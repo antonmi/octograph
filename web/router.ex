@@ -18,10 +18,13 @@ defmodule Octograph.Router do
     get "/", PageController, :index
 
     resources "/user_nodes", UserNodesController, only: [:index]
-    resource "user_spider", UserSpiderController, only: [:show] do
-      post "/start", UserSpiderController, :start, as: :start
-      post "/stop", UserSpiderController, :stop, as: :stop
+
+    resources "/spiders", SpidersController, only: [] do
+      get "/",  SpidersController, :show
+      post "/start", SpidersController, :start, as: :start
+      post "/stop", SpidersController, :stop, as: :stop
     end
+   
   end
 
   # Other scopes may use custom stacks.

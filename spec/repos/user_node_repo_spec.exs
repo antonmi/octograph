@@ -31,7 +31,7 @@ defmodule UserNodeRepoSpec do
 		it do: last.github_id |> should eq 3
 	end
 
-	describe "update_or_create" do
+	describe "find_or_create" do
 		before do
 			data = %{"login" => "test", "id" => 100500}
 			user_node = Octograph.UserNode.new(data)
@@ -39,7 +39,7 @@ defmodule UserNodeRepoSpec do
 		end
 
 		before do
-			created = Octograph.UserNodeRepo.update_or_create(__.user_node)
+			created = Octograph.UserNodeRepo.find_or_create(__.user_node)
 			{:ok, created: created}
 		end
 
@@ -49,22 +49,6 @@ defmodule UserNodeRepoSpec do
 			expect(user_node.login).to eq("test")
 			expect(user_node.github_id).to eq(100500)
 		end
-
-		context "udpdate" do
-			before do
-				data = %{"login" => "test", "id" => 100501}
-				user_node = Octograph.UserNode.new(data)
-				Octograph.UserNodeRepo.update_or_create(user_node)
-			end
-			
-			let :user_node, do: Octograph.UserNodeRepo.find_by_login("test")
-			
-			it "check user_node" do
-				expect(user_node.login).to eq("test")
-				expect(user_node.github_id).to eq(100501)
-			end
-		end
-
 
 	end
 
@@ -81,12 +65,48 @@ defmodule UserNodeRepoSpec do
 	end
 
 
-	describe "without_followers" do
+	describe "first_without_followers" do
 		before do
 			Octograph.UserNode.followers_updated!(__.u1)
 		end
 
-		let :users, do: Octograph.UserNodeRepo.without_followers
-		it do: Enum.map(users, &(&1.login)) |> should eq ["u2", "u3"]
+		let :user, do: Octograph.UserNodeRepo.first_without_followers
+		it do: user.login |> should eq "u2"
+	end
+
+	describe "find_by_logins" do
+		let :users, do: Octograph.UserNodeRepo.find_by_logins(["u1", "u2"])
+
+		it do: Enum.map(users, &(&1.login)) |> should eq(["u1", "u2"])
+	end
+
+	describe "find_or_create_followers" do
+		let :data do
+			[
+				%{"login" => "a1", "id" => 11},
+				%{"login" => "u1", "id" => 1},
+				%{"login" => "u2", "id" => 2},
+				%{"login" => "a2", "id" => 12}
+			]
+		end
+
+		before do
+			result = Octograph.UserNodeRepo.find_or_create_followers(data)
+			{:ok, result: result}
+		end
+
+		let :records, do: Octograph.UserNodeRepo.find_by_logins(["u1", "u2", "a1", "a2"])
+		
+		it "checks records" do
+			records	|> should have_count 4
+		end
+
+		it "checks result" do
+		  __.result
+		  |> Enum.map(fn(r) -> r.login end)
+		  |> should eq(["u1", "u2", "a1", "a2"])
+		end
+
+
 	end
 end
