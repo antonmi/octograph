@@ -28,8 +28,10 @@
 
 	def get_followers(user) do
 		user = update_user_data(user)
-		find_followers(user) 
-		Octograph.UserNode.followers_updated!(user)
+		if user.flrs_count < 1000 do
+			find_followers(user) 
+			Octograph.UserNode.followers_updated!(user)
+		end 
 		last = Octograph.UserNodeRepo.first_without_followers
 		GenServer.cast __MODULE__, {:next, %{last: last}}
 	end
