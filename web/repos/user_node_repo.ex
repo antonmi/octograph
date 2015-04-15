@@ -35,7 +35,7 @@ defmodule Octograph.UserNodeRepo do
   end
 
   def first_without_followers do
-		query = from(un in module, where: is_nil(un.followers_checked_at), select: un, limit: 1)
+		query = from(un in module, order_by: [asc: :id], where: is_nil(un.followers_checked_at), select: un, limit: 1)
     Octograph.Repo.one(query)
   end
 
