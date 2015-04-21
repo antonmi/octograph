@@ -18,7 +18,6 @@
 	end
 
 	def info do
-		IO.inspect "1111111111"
 		if Process.whereis(Octograph.Octo.UserSpider) do
 			state = GenServer.call(__MODULE__, :info, :infinity)
 			%{status: :active, state: state}
